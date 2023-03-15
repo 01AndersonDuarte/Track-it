@@ -1,6 +1,9 @@
 import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Audio, Circles, TailSpin } from "react-loader-spinner";
+
+
 import styled from "styled-components";
 import Error from "./Error";
 
@@ -16,6 +19,7 @@ export default function FormLogin() {
 
         const url = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login";
         const promise = axios.post(url, dataLogin);
+
 
         promise.then((sucess) => {
             console.log("SUCESSO")
@@ -38,6 +42,19 @@ export default function FormLogin() {
         const attribute = event.target.name;
 
         setDataLogin({ ...dataLogin, [attribute]: value });
+    }
+    if (request===true) {
+        console.log("COMECOU");
+        return (
+            <TailSpin
+                height="80"
+                width="80"
+                radius="9"
+                color="green"
+                ariaLabel="loading"
+                wrapperStyle
+                wrapperClass
+            />);
     }
     return (
         <StyledForm onSubmit={loginRequest}>
