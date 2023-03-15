@@ -41,5 +41,6 @@ const ContainerError = styled.div`
     p{
         margin: 3% 0 3% 0;
         color: red;
+        text-align: center;
     }
 `;
