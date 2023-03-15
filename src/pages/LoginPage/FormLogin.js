@@ -1,12 +1,36 @@
+import axios from "axios";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import Error from "./Error";
 
 export default function FormLogin() {
     const [dataLogin, setDataLogin] = useState({ email: "", password: "" })
+    const [request, setRequest] = useState(false);
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
-    function login() {
+    function loginRequest(event) {
+        event.preventDefault();
+        setRequest(true);
 
+        const url = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login";
+        const promise = axios.post(url, dataLogin);
+
+        promise.then((sucess) => {
+            console.log("SUCESSO")
+            console.log(sucess.data)
+            setRequest(false);
+            navigate("/today-page");
+        });
+        promise.catch((error) => {
+            setRequest(false);
+            if (error.response.status === 422) {
+                setError('Este email não existe!');
+            } else if (error.response.status === 401) {
+                setError('Usuário ou senha inválidos.');
+            }
+        });
     }
     function insertData(event) {
         event.target.setCustomValidity('');
@@ -16,8 +40,11 @@ export default function FormLogin() {
         setDataLogin({ ...dataLogin, [attribute]: value });
     }
     return (
-        <StyledForm onSubmit={login}>
+        <StyledForm onSubmit={loginRequest}>
+            {error && <Error error={error} setError={setError} />}
+
             <input
+                disabled={request}
                 type="email"
                 placeholder="E-mail"
                 name="email"
@@ -29,6 +56,7 @@ export default function FormLogin() {
             />
 
             <input
+                disabled={request}
                 type="password"
                 placeholder="Senha"
                 name="password"
@@ -37,8 +65,8 @@ export default function FormLogin() {
                 required
                 onInvalid={(event) => event.target.setCustomValidity('Por favor, preencha este campo.')}
             />
-            <button type="submit">Entrar</button>
-            <Link to="/register-page"><p>Não tem uma conta? Cadastre-se!</p></Link>
+            <button type="submit" disabled={request}>Entrar</button>
+            <Link to="/register-page"><h2>Não tem uma conta? Cadastre-se!</h2></Link>
         </StyledForm>
     );
 }
@@ -48,7 +76,6 @@ const StyledForm = styled.form`
     display: flex;
     flex-direction: column;
     align-items: center;
-
     transition: all 0.3s ease-in;
     input{
         margin: 2%;
@@ -75,12 +102,15 @@ const StyledForm = styled.form`
         border-radius: 5px;
         cursor: pointer;
     }
-    p{
+    h2{
         margin: 8% 0 2% 0;
         line-height: 17px;
         text-align: center;
         color: #52B6FF;
         text-decoration-line: underline;
-
+    }
+    p{
+        margin: 3% 0 3% 0;
+        color: red;
     }
 `;
