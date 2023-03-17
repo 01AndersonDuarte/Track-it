@@ -1,10 +1,10 @@
-import TrackitLogo from "../../constants/TrackitLogo";
+import { TrackitLogo } from "../../constants/Trackit";
 import FormRegister from "./FormRegister";
 
 export default function LoginPage() {
     return (
         <>
-            <TrackitLogo/>
+            {TrackitLogo}
             <FormRegister/>
         </>
     );

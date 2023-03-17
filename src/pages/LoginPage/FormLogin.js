@@ -1,9 +1,7 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
-
-import styled from "styled-components";
+import { CurrentUserContext } from "../../components/CurrentUserContext";
 
 import Error from "../../components/Error";
 import Loading from "../../components/Loading";
@@ -15,6 +13,13 @@ export default function FormLogin() {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
+    const { userLogado, setUserLogado } = useContext(CurrentUserContext);
+
+    useEffect(() => {
+        localStorage.removeItem("user");
+        setUserLogado(JSON.parse(localStorage.getItem("user")));
+    }, []);
+
     function loginRequest(event) {
         event.preventDefault();
         setRequest(true);
@@ -24,6 +29,12 @@ export default function FormLogin() {
 
 
         promise.then((sucess) => {
+            console.log(sucess.data);
+
+            const object = { image: `${sucess.data.image}`, token: `${sucess.data.token}` };
+            const objectSerial = JSON.stringify(object);
+            localStorage.setItem("user", objectSerial);
+            setUserLogado(JSON.parse(localStorage.getItem("user")));
             navigate("/today-page");
         });
         promise.catch((error) => {
@@ -48,6 +59,7 @@ export default function FormLogin() {
             {error && <Error error={error} setError={setError} />}
 
             <input
+                data-tes="email-input"
                 disabled={request}
                 type="email"
                 placeholder="E-mail"
@@ -60,6 +72,7 @@ export default function FormLogin() {
             />
 
             <input
+                data-tes="password-input"
                 disabled={request}
                 type="password"
                 placeholder="Senha"
@@ -69,8 +82,8 @@ export default function FormLogin() {
                 required
                 onInvalid={(event) => event.target.setCustomValidity('Por favor, preencha este campo.')}
             />
-            <button type="submit" disabled={request}>{request ? <Loading /> : 'Entrar'}</button>
-            <Link to="/register-page"><h2>Não tem uma conta? Cadastre-se!</h2></Link>
+            <button data-test="login-btn" type="submit" disabled={request}>{request ? <Loading /> : 'Entrar'}</button>
+            <Link data-test="singup-link" to="/register-page"><h2>Não tem uma conta? Cadastre-se!</h2></Link>
         </StyledForm>
     );
 }
