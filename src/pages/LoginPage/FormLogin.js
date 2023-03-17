@@ -83,7 +83,7 @@ export default function FormLogin() {
                 onInvalid={(event) => event.target.setCustomValidity('Por favor, preencha este campo.')}
             />
             <button data-test="login-btn" type="submit" disabled={request}>{request ? <Loading /> : 'Entrar'}</button>
-            <Link data-test="signup-link" to="/register-page"><h2>Não tem uma conta? Cadastre-se!</h2></Link>
+            <Link to="/register-page"><h2 data-test="signup-link">Não tem uma conta? Cadastre-se!</h2></Link>
         </StyledForm>
     );
 }
