@@ -25,8 +25,8 @@ export default function App() {
               <Route path="/" element={<LoginPage/>} />
               <Route path="/cadastro" element={<RegisterPage />} />
               <Route path="/hoje" element={<TodayPage />} />
-              <Route path="/habits-page" element={<HabitsPage />} />
-              <Route path="/history-page" element={<HistoryPage />} />
+              <Route path="/habitos" element={<HabitsPage />} />
+              <Route path="/historico" element={<HistoryPage />} />
             </Routes>
         </BrowserRouter>
       </Container>

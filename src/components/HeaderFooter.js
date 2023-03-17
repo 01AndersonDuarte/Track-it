@@ -18,13 +18,13 @@ export default function HeaderFooter() {
                 <Container>
                     <header data-test="header">{TrackitText}<img src={userLogado.image} alt="" /></header>
                     <footer data-test="menu">
-                        <Link data-test="habit-link" to="/habits-page">
+                        <Link data-test="habit-link" to="/habitos">
                             <p>Hábitos</p>
                         </Link>
                         <Link data-test="today-link" to="/hoje">
                             <button><CircularProgressbar value={26} text={`Hoje`} /></button>
                         </Link>
-                        <Link data-test="history-link" to="/history-page">
+                        <Link data-test="history-link" to="/historico">
                             <p>Histórico</p>
                         </Link>
 
