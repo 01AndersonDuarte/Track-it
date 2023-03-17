@@ -35,7 +35,7 @@ export default function FormLogin() {
             const objectSerial = JSON.stringify(object);
             localStorage.setItem("user", objectSerial);
             setUserLogado(JSON.parse(localStorage.getItem("user")));
-            navigate("/today-page");
+            navigate("/hoje");
         });
         promise.catch((error) => {
             setRequest(false);
@@ -83,7 +83,7 @@ export default function FormLogin() {
                 onInvalid={(event) => event.target.setCustomValidity('Por favor, preencha este campo.')}
             />
             <button data-test="login-btn" type="submit" disabled={request}>{request ? <Loading /> : 'Entrar'}</button>
-            <Link to="/register-page"><h2 data-test="signup-link">Não tem uma conta? Cadastre-se!</h2></Link>
+            <Link data-test="signup-link" to="/cadastro"><h2>Não tem uma conta? Cadastre-se!</h2></Link>
         </StyledForm>
     );
 }

@@ -23,8 +23,8 @@ export default function App() {
           <HeaderFooter/>
             <Routes>
               <Route path="/" element={<LoginPage/>} />
-              <Route path="/register-page" element={<RegisterPage />} />
-              <Route path="/today-page" element={<TodayPage />} />
+              <Route path="/cadastro" element={<RegisterPage />} />
+              <Route path="/hoje" element={<TodayPage />} />
               <Route path="/habits-page" element={<HabitsPage />} />
               <Route path="/history-page" element={<HistoryPage />} />
             </Routes>
