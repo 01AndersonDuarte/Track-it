@@ -8,12 +8,12 @@ import { StyledForm } from "../../components/styledForm";
 
 
 export default function FormRegister() {
-    const [registrationData, setRegistrationData] = useState({ email: "", name: "", image: "",  password: "" });
+    const [registrationData, setRegistrationData] = useState({ email: "", name: "", image: "", password: "" });
     const [request, setRequest] = useState(false);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
-    function registerRequest(event){
+    function registerRequest(event) {
         event.preventDefault();
         setRequest(true);
 
@@ -32,18 +32,19 @@ export default function FormRegister() {
             }
         });
     }
-    function insertRegistrationData(event){
+    function insertRegistrationData(event) {
         event.target.setCustomValidity('');
         const value = event.target.value;
         const attribute = event.target.name;
-        
-        setRegistrationData({ ...registrationData, [attribute]: value });     
+
+        setRegistrationData({ ...registrationData, [attribute]: value });
     }
     return (
         <StyledForm onSubmit={registerRequest}>
             {error && <Error error={error} setError={setError} />}
 
             <input
+                data-test="email-input"
                 disabled={request}
                 type="email"
                 placeholder="E-mail"
@@ -56,6 +57,7 @@ export default function FormRegister() {
             />
 
             <input
+                data-test="password-input"
                 disabled={request}
                 type="password"
                 placeholder="Senha"
@@ -67,6 +69,7 @@ export default function FormRegister() {
             />
 
             <input
+            data-test="user-name-input"
                 disabled={request}
                 type="text"
                 placeholder="Nome"
@@ -78,6 +81,7 @@ export default function FormRegister() {
             />
 
             <input
+            data-test="user-image-input"
                 disabled={request}
                 type="text"
                 placeholder="Imagem"
@@ -87,8 +91,8 @@ export default function FormRegister() {
                 required
                 onInvalid={(event) => event.target.setCustomValidity('Por favor, preencha este campo.')}
             />
-            <button type="submit" disabled={request}>{request ? <Loading/> : 'Cadastrar-se'}</button>
-            <Link to="/"><h2>Já tem uma conta? Faça login!</h2></Link>
+            <button data-test="signup-btn" type="submit" disabled={request}>{request ? <Loading /> : 'Cadastrar-se'}</button>
+            <Link data-test="login-link" to="/"><h2>Já tem uma conta? Faça login!</h2></Link>
         </StyledForm>
     );
 }
