@@ -39,7 +39,7 @@ export default function HabitsPage() {
     }
 
     function removeHabit(option) {
-        if(option){
+        if (option) {
             const url = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${idDelete}`;
             const config = { headers: { Authorization: `Bearer ${userLogado.token}` } };
 
@@ -83,24 +83,25 @@ export default function HabitsPage() {
 
     return (
         <ContainerHabits>
-            {deleteHabit && <DeleteHabit removeHabit={removeHabit}/>}
+            {deleteHabit && <DeleteHabit removeHabit={removeHabit} />}
             <SignUpHabit>
                 <p>Meus hábitos</p>
-                <button onClick={() => setSignUp(!signUp)}>+</button>
+                <button data-test="habit-create-btn" onClick={() => setSignUp(!signUp)}>+</button>
             </SignUpHabit>
             {signUp &&
-                <FormHabit>
+                <FormHabit data-test="habit-create-container">
                     <input
+                        data-test="habit-name-input"
                         disabled={request}
                         placeholder="Nome do hábito"
                         value={habit.name}
                         required
                         onChange={(e) => setHabit({ ...habit, name: e.target.value })}
                     />
-                    <span>{week.map((w) => <AllButton key={w.day} w={w} habit={habit} setHabit={setHabit} state={habit.days.some((d) => d === w.day)} request={request}/>)}</span>
+                    <span>{week.map((w) => <AllButton key={w.day} w={w} habit={habit} setHabit={setHabit} state={habit.days.some((d) => d === w.day)} request={request} />)}</span>
                     <div>
-                        <button onClick={() => setSignUp(!signUp)} disabled={request}>Cancelar</button>
-                        <button onClick={addHabit} disabled={request}>Salvar</button>
+                        <button data-test="habit-create-cancel-btn" onClick={() => setSignUp(!signUp)} disabled={request}>Cancelar</button>
+                        <button data-test="habit-create-save-btn" onClick={addHabit} disabled={request}>Salvar</button>
                     </div>
                 </FormHabit>
             }
@@ -108,16 +109,16 @@ export default function HabitsPage() {
                 <h2>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</h2>
                 :
                 userHabits.map((h) => (
-                    <MyHabits key={h.id}>
+                    <MyHabits data-test="habit-container" key={h.id}>
                         <span>
-                            <p>{h.name}</p>
-                            <TrashIcon onClick={()=>{
+                            <p data-test="habit-name">{h.name}</p>
+                            <TrashIcon data-test="habit-delete-btn" onClick={() => {
                                 setDeleteHabit(true);
                                 setIdDelete(h.id);
-                             }} />
+                            }} />
                         </span>
                         <span>
-                            {week.map((w) => <Button key={w.day} buttonState={h.days.some((d) => w.day === d)}>{w.name}</Button>)}
+                            {week.map((w) => <Button data-test="habit-day" key={w.day} buttonState={h.days.some((d) => w.day === d)}>{w.name}</Button>)}
                         </span>
                     </MyHabits>
                 ))
@@ -138,7 +139,7 @@ function AllButton({ w, habit, setHabit, state, request }) {
         setHabit({ ...habit, days: [...habit.days, day] });
     }
     return (
-        <Button buttonState={buttonState} onClick={() => addButton(w.day)} disabled={request}>
+        <Button data-test="habit-day" buttonState={buttonState} onClick={() => addButton(w.day)} disabled={request}>
             {w.name}
         </Button>
     );
