@@ -37,7 +37,7 @@ export default function HeaderFooter() {
 
 const Container = styled.div`
     width: 100%;
-    
+    font-family: 'Lexend Deca', sans-serif;
     header{
         width: 100%;
         padding: 2% 10% 2% 10%;
@@ -74,13 +74,10 @@ const Container = styled.div`
         justify-content: space-around;
 
         p{
-            font-size: 20px;
+            font-size: 18px;
             color: #52B6FF;
             text-decoration: none;
-            text-decoration-line: underline;
-        }
-        Link{
-            text-decoration: none;
+            /* text-decoration-line: underline; */
         }
         button{
             width: 91px;
