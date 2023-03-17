@@ -9,5 +9,8 @@ export default function HabitsPage() {
 }
 
 const ContainerHabits = styled.div`
-    padding: 20%;
+    margin-top: 19%;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(229, 229, 229, 0.4);
 `;
