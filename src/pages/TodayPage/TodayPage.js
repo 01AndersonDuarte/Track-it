@@ -40,18 +40,18 @@ export default function TodayPage() {
     return (
         <ContainerToday color={todayHabits.some(h=>h.done===true) ? "#8FC549" : "#BABABA"}>
             <div>
-                <h1>{day}, {dayjs().format('DD/MM')}</h1>
+                <h1 data-test="today">{day}, {dayjs().format('DD/MM')}</h1>
 
                 {todayHabits === null ? (
-                    <h2>Nenhum hábito concluído ainda</h2>
+                    <h2 data-test="today-counter">Nenhum hábito concluído ainda</h2>
                 ) : todayHabits.some((h) => h.done === true) ? (
                     <CurrentUserContext.Provider value={{config, habitsComplete}}>
-                        <h2>{(todayHabits.filter(h=>h.done===true).length*100/todayHabits.length).toFixed(2)}% dos hábitos concluídos</h2>
+                        <h2 data-test="today-counter">{(todayHabits.filter(h=>h.done===true).length*100/todayHabits.length).toFixed(2)}% dos hábitos concluídos</h2>
                         {todayHabits.map((habit) => <HabitsList key={habit.id} habit={habit} />)}
                     </CurrentUserContext.Provider>
                 ) : (
                     <CurrentUserContext.Provider value={{config, habitsComplete}}>
-                        <h2>Nenhum hábito concluído ainda</h2>
+                        <h2 data-test="today-counter">Nenhum hábito concluído ainda</h2>
                         {todayHabits.map((habit) => <HabitsList key={habit.id} habit={habit} />)}
                     </CurrentUserContext.Provider>
                 )}

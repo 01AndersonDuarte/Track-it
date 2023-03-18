@@ -42,14 +42,14 @@ export default function HabitsList({ habit }) {
 
     return (
         <>
-            <TodayHabits habitDone={stateCheck && "#8FC549"} recordHabit={(bool && habit.currentSequence>0) && "#8FC549"}>
+            <TodayHabits data-test="today-habit-container" habitDone={stateCheck && "#8FC549"} recordHabit={(bool && habit.currentSequence>0) && "#8FC549"}>
                 <span>
-                    <p>{habit.name}</p>
-                    <h3>Sequência atual: <span>{habit.currentSequence} dias</span></h3>
-                    <h3>Seu recorde: <span>{habit.highestSequence} dias</span></h3>
+                    <p data-test="today-habit-name">{habit.name}</p>
+                    <h3 data-test="today-habit-sequence">Sequência atual: <span>{habit.currentSequence} dias</span></h3>
+                    <h3 data-test="today-habit-record">Seu recorde: <span>{habit.highestSequence} dias</span></h3>
                 </span>
                 <span>
-                    <CheckBox style={{ fill: stateCheck ? "#8FC549" : "#EBEBEB" }} onClick={activityCheck} />
+                    <CheckBox data-test="today-habit-check-btn" style={{ fill: stateCheck ? "#8FC549" : "#EBEBEB" }} onClick={activityCheck} />
                 </span>
             </TodayHabits>
         </>
