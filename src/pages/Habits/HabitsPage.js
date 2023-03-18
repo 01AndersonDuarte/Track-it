@@ -18,6 +18,7 @@ export default function HabitsPage() {
     const week = [{ day: 7, name: 'D' }, { day: 1, name: 'S' }, { day: 2, name: 'T' }, { day: 3, name: 'Q' },
     { day: 4, name: 'Q' }, { day: 5, name: 'S' }, { day: 6, name: 'S' }];
 
+    console.log(signUp);
     function addHabit() {
         setRequest(true);
 
@@ -26,7 +27,10 @@ export default function HabitsPage() {
 
         const promise = axios.post(url, habit, config);
         promise.then((sucess) => {
-            window.location.reload();
+            setHabit({ name: "", days: [] });
+            setSignUp(!signUp);
+            setRequest(false);
+            refreshHabits();
             console.log(sucess.data);
         });
         promise.catch((error) => {
@@ -45,7 +49,7 @@ export default function HabitsPage() {
 
             const promise = axios.delete(url, config);
             promise.then((sucess) => {
-                window.location.reload();
+                
                 console.log(sucess.data);
             });
             promise.catch((error) => {
@@ -57,7 +61,7 @@ export default function HabitsPage() {
         setDeleteHabit(option);
     }
 
-    useEffect(() => {
+    function refreshHabits() {
         const config = { headers: { Authorization: `Bearer ${userLogado.token}` } };
         const url = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
 
@@ -69,7 +73,8 @@ export default function HabitsPage() {
         promise.catch((error) => {
             console.log(error);
         });
-    }, []);
+    }
+    useEffect(refreshHabits, []);
 
     if (userHabits === null) {
         return (
@@ -93,6 +98,7 @@ export default function HabitsPage() {
                     <input
                         data-test="habit-name-input"
                         disabled={request}
+                        type="text"
                         placeholder="Nome do hábito"
                         value={habit.name}
                         required
