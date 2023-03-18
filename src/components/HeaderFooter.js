@@ -22,7 +22,7 @@ export default function HeaderFooter() {
                             <p>Hábitos</p>
                         </Link>
                         <Link data-test="today-link" to="/hoje">
-                            <button><CircularProgressbar value={26} text={`Hoje`} /></button>
+                            <button><CircularProgressbar value={userLogado.habitsMade} text={`Hoje`} /></button>
                         </Link>
                         <Link data-test="history-link" to="/historico">
                             <p>Histórico</p>
