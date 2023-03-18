@@ -86,7 +86,7 @@ export default function HabitsPage() {
             {deleteHabit && <DeleteHabit removeHabit={removeHabit} />}
             <SignUpHabit>
                 <p>Meus hábitos</p>
-                <button data-test="habit-create-btn" onClick={() => setSignUp(!signUp)}>+</button>
+                <button data-test="habit-create-btn" onClick={() => setSignUp(!signUp)} disabled={request}>+</button>
             </SignUpHabit>
             {signUp &&
                 <FormHabit data-test="habit-create-container">
@@ -98,7 +98,7 @@ export default function HabitsPage() {
                         required
                         onChange={(e) => setHabit({ ...habit, name: e.target.value })}
                     />
-                    <span>{week.map((w) => <AllButton key={w.day} w={w} habit={habit} setHabit={setHabit} state={habit.days.some((d) => d === w.day)} request={request} />)}</span>
+                    <span>{week.map((w) => <AllButton key={w.day} w={w} habit={habit} setHabit={setHabit} request={request} />)}</span>
                     <div>
                         <button data-test="habit-create-cancel-btn" onClick={() => setSignUp(!signUp)} disabled={request}>Cancelar</button>
                         <button data-test="habit-create-save-btn" onClick={addHabit} disabled={request}>Salvar</button>
@@ -127,19 +127,19 @@ export default function HabitsPage() {
     );
 }
 
-function AllButton({ w, habit, setHabit, state, request }) {
-    const [buttonState, setButtonState] = useState(state);
+function AllButton({ w, habit, setHabit, request }) {
+
     function addButton(day) {
-        setButtonState(!buttonState);
-        if (buttonState === true) {
+        if (habit.days.includes(w.day)) {
             const days = habit.days.filter((d) => d !== day);
             setHabit({ ...habit, days: days })
             return;
         }
         setHabit({ ...habit, days: [...habit.days, day] });
     }
+
     return (
-        <Button data-test="habit-day" buttonState={buttonState} onClick={() => addButton(w.day)} disabled={request}>
+        <Button data-test="habit-day" buttonState={habit.days.includes(w.day)} onClick={() => addButton(w.day)} disabled={request}>
             {w.name}
         </Button>
     );
@@ -179,7 +179,7 @@ const SignUpHabit = styled.div`
 
 const ContainerHabits = styled.div`
     width: 100%;
-    height: 100vh;
+    /* height: 100%; */
     padding: 20% 5% 20% 5%;
     font-family: 'Lexend Deca', sans-serif;
     background-color: rgba(229, 229, 229, 0.4);
