@@ -16,7 +16,7 @@ export default function HabitsPage() {
 
     const [signUp, setSignUp] = useState(false);
     const [habit, setHabit] = useState({ name: "", days: [] });
-    const week = [{ day: 7, name: 'D' }, { day: 1, name: 'S' }, { day: 2, name: 'T' }, { day: 3, name: 'Q' },
+    const week = [{ day: 0, name: 'D' }, { day: 1, name: 'S' }, { day: 2, name: 'T' }, { day: 3, name: 'Q' },
     { day: 4, name: 'Q' }, { day: 5, name: 'S' }, { day: 6, name: 'S' }];
 
     function addHabit() {
@@ -69,6 +69,7 @@ export default function HabitsPage() {
         const promise = axios.get(url, config);
         promise.then((sucess) => {
             setUserHabits(sucess.data)
+            console.log(sucess.data);
         });
         promise.catch((error) => {
             console.log(error.response);

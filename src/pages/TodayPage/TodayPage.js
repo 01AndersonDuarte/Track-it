@@ -6,12 +6,12 @@ import dayjs from "dayjs";
 import { CurrentUserContext } from "../../components/CurrentUserContext";
 import HabitsList from "./HabitsList";
 
-const daysWeek = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'];
+const daysWeek = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
 
 export default function TodayPage() {
     const { userLogado, setUserLogado } = useContext(CurrentUserContext);
     const [todayHabits, setTodayHabits] = useState(null);
-    const day = daysWeek[dayjs().day() - 1];
+    const day = daysWeek[dayjs().day()];
 
     const config = { headers: { Authorization: `Bearer ${userLogado.token}` } };
     const url = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today";    
@@ -21,9 +21,12 @@ export default function TodayPage() {
         setUserLogado({...userLogado, habitsMade: complete});
     }
     function refreshHabitsToday(){
+        console.log(day);
+
         const promise = axios.get(url, config);
         promise.then((sucess) => {
             setTodayHabits(sucess.data);
+            console.log(sucess.data);
         });
         promise.catch((error) => {
             console.log(error);
@@ -46,6 +49,7 @@ export default function TodayPage() {
                     <h2 data-test="today-counter">Nenhum hábito concluído ainda</h2>
                 ) : todayHabits.some((h) => h.done === true) ? (
                     <CurrentUserContext.Provider value={{config, habitsComplete, refreshHabitsToday}}>
+                        {console.log(todayHabits)}
                         <h2 data-test="today-counter">{(todayHabits.filter(h=>h.done===true).length*100/todayHabits.length).toFixed(2)}% dos hábitos concluídos</h2>
                         {todayHabits.map((habit) => <HabitsList key={habit.id} habit={habit} />)}
                     </CurrentUserContext.Provider>
