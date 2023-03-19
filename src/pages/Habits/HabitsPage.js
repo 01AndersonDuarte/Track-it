@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { CurrentUserContext } from "../../components/CurrentUserContext";
 import { BsTrash } from "react-icons/bs"
 import DeleteHabit from "./DeleteHabit";
+import Loading from "../../components/Loading";
 
 export default function HabitsPage() {
     const { userLogado, setUserLogado } = useContext(CurrentUserContext);
@@ -18,7 +19,6 @@ export default function HabitsPage() {
     const week = [{ day: 7, name: 'D' }, { day: 1, name: 'S' }, { day: 2, name: 'T' }, { day: 3, name: 'Q' },
     { day: 4, name: 'Q' }, { day: 5, name: 'S' }, { day: 6, name: 'S' }];
 
-    console.log(signUp);
     function addHabit() {
         setRequest(true);
 
@@ -43,22 +43,23 @@ export default function HabitsPage() {
     }
 
     function removeHabit(option) {
+        setDeleteHabit(!deleteHabit);
         if (option) {
             const url = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${idDelete}`;
             const config = { headers: { Authorization: `Bearer ${userLogado.token}` } };
 
             const promise = axios.delete(url, config);
             promise.then((sucess) => {
-                
+                refreshHabits()
                 console.log(sucess.data);
             });
             promise.catch((error) => {
+                refreshHabits();
                 setRequest(false);
                 console.log(error.response.data);
             });
             return;
         }
-        setDeleteHabit(option);
     }
 
     function refreshHabits() {
@@ -68,12 +69,12 @@ export default function HabitsPage() {
         const promise = axios.get(url, config);
         promise.then((sucess) => {
             setUserHabits(sucess.data)
-            console.log(sucess);
         });
         promise.catch((error) => {
-            console.log(error);
+            console.log(error.response);
         });
     }
+
     useEffect(refreshHabits, []);
 
     if (userHabits === null) {
@@ -107,7 +108,7 @@ export default function HabitsPage() {
                     <span>{week.map((w) => <AllButton key={w.day} w={w} habit={habit} setHabit={setHabit} request={request} />)}</span>
                     <div>
                         <button data-test="habit-create-cancel-btn" onClick={() => setSignUp(!signUp)} disabled={request}>Cancelar</button>
-                        <button data-test="habit-create-save-btn" onClick={addHabit} disabled={request}>Salvar</button>
+                        <button data-test="habit-create-save-btn" onClick={addHabit} disabled={request}>{request ? <Loading /> : 'Salvar'}</button>
                     </div>
                 </FormHabit>
             }
@@ -232,7 +233,9 @@ const FormHabit = styled.div`
             border-radius: 4px;
             width: 60px;
             height: 30px;
-            margin-left: 5%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         button:nth-child(1){
             font-family: 'Lexend Deca';
@@ -242,7 +245,9 @@ const FormHabit = styled.div`
             margin-right: 5%;
             line-height: 20px;
             color: #52B6FF;
-            background-color: white;
+            background-color: #FFFFFF;
+            display: flex;
+            justify-content: center;
         }
     }
 `;

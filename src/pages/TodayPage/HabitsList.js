@@ -29,7 +29,6 @@ export default function HabitsList({ habit }) {
         }
 
         const url = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habit.id}/check`;
-        console.log(url);
         const promise = axios.post(url, '', config);
         promise.then((sucess)=>{
             console.log(sucess);
