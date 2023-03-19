@@ -19,6 +19,7 @@ export default function HabitsPage() {
     const week = [{ day: 7, name: 'D' }, { day: 1, name: 'S' }, { day: 2, name: 'T' }, { day: 3, name: 'Q' },
     { day: 4, name: 'Q' }, { day: 5, name: 'S' }, { day: 6, name: 'S' }];
 
+    
     function addHabit() {
         setRequest(true);
 
@@ -89,7 +90,7 @@ export default function HabitsPage() {
 
     return (
         <ContainerHabits>
-            {deleteHabit && <DeleteHabit removeHabit={removeHabit} />}
+            {/* {deleteHabit && <DeleteHabit removeHabit={removeHabit} />} */}
             <SignUpHabit>
                 <p>Meus hábitos</p>
                 <button data-test="habit-create-btn" onClick={() => setSignUp(!signUp)} disabled={request}>+</button>
@@ -120,7 +121,9 @@ export default function HabitsPage() {
                         <span>
                             <p data-test="habit-name">{h.name}</p>
                             <TrashIcon data-test="habit-delete-btn" onClick={() => {
+                                window.confirm("Deseja realmente excluir?")
                                 setDeleteHabit(true);
+                                removeHabit(true);
                                 setIdDelete(h.id);
                             }} />
                         </span>
