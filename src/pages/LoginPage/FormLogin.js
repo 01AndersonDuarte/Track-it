@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { CurrentUserContext } from "../../components/CurrentUserContext";
 
 import Error from "../../components/Error";
-import Loading from "../../components/Loading";
+import { Loading } from "../../components/Loading";
 import { StyledForm } from "../../components/styledForm";
 
 export default function FormLogin() {

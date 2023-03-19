@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import Error from "../../components/Error";
-import Loading from "../../components/Loading";
+import { Loading } from "../../components/Loading";
 import { StyledForm } from "../../components/styledForm";
 
 
@@ -69,7 +69,7 @@ export default function FormRegister() {
             />
 
             <input
-            data-test="user-name-input"
+                data-test="user-name-input"
                 disabled={request}
                 type="text"
                 placeholder="Nome"
@@ -81,7 +81,7 @@ export default function FormRegister() {
             />
 
             <input
-            data-test="user-image-input"
+                data-test="user-image-input"
                 disabled={request}
                 type="text"
                 placeholder="Imagem"

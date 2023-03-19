@@ -18,15 +18,15 @@ export default function HeaderFooter() {
                 <Container>
                     <header data-test="header">{TrackitText}<img src={userLogado.image} alt="" /></header>
                     <footer data-test="menu">
-                        <Link data-test="habit-link" to="/habitos">
+                        <StyledLink data-test="habit-link" to="/habitos">
                             <p>Hábitos</p>
-                        </Link>
-                        <Link data-test="today-link" to="/hoje">
+                        </StyledLink>
+                        <StyledLink data-test="today-link" to="/hoje">
                             <button><CircularProgressbar value={userLogado.habitsMade} text={`Hoje`} /></button>
-                        </Link>
-                        <Link data-test="history-link" to="/historico">
+                        </StyledLink>
+                        <StyledLink data-test="history-link" to="/historico">
                             <p>Histórico</p>
-                        </Link>
+                        </StyledLink>
 
                     </footer>
                 </Container>}
@@ -73,12 +73,6 @@ const Container = styled.div`
         align-items: center;
         justify-content: space-around;
 
-        p{
-            font-size: 18px;
-            color: #52B6FF;
-            text-decoration: none;
-            /* text-decoration-line: underline; */
-        }
         button{
             width: 91px;
             height: 91px;
@@ -87,5 +81,13 @@ const Container = styled.div`
             color: #FFFFFF;
             border: none;
         }
+    }
+`;
+
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    p{
+        font-size: 18px;
+        color: #52B6FF;
     }
 `;

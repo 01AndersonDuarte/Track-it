@@ -20,16 +20,16 @@ export default function TodayPage() {
         const complete =  todayHabits.filter(h=>h.done===true).length*100/todayHabits.length.toFixed(2);
         setUserLogado({...userLogado, habitsMade: complete});
     }
-    useEffect(() => {
+    function refreshHabitsToday(){
         const promise = axios.get(url, config);
         promise.then((sucess) => {
             setTodayHabits(sucess.data);
-            console.log(sucess.data);
         });
         promise.catch((error) => {
             console.log(error);
         });
-    }, []);
+    }
+    useEffect(refreshHabitsToday, []);
 
     if (todayHabits === null) {
         return (
@@ -45,12 +45,12 @@ export default function TodayPage() {
                 {todayHabits === null ? (
                     <h2 data-test="today-counter">Nenhum hábito concluído ainda</h2>
                 ) : todayHabits.some((h) => h.done === true) ? (
-                    <CurrentUserContext.Provider value={{config, habitsComplete}}>
+                    <CurrentUserContext.Provider value={{config, habitsComplete, refreshHabitsToday}}>
                         <h2 data-test="today-counter">{(todayHabits.filter(h=>h.done===true).length*100/todayHabits.length).toFixed(2)}% dos hábitos concluídos</h2>
                         {todayHabits.map((habit) => <HabitsList key={habit.id} habit={habit} />)}
                     </CurrentUserContext.Provider>
                 ) : (
-                    <CurrentUserContext.Provider value={{config, habitsComplete}}>
+                    <CurrentUserContext.Provider value={{config, habitsComplete, refreshHabitsToday}}>
                         <h2 data-test="today-counter">Nenhum hábito concluído ainda</h2>
                         {todayHabits.map((habit) => <HabitsList key={habit.id} habit={habit} />)}
                     </CurrentUserContext.Provider>
