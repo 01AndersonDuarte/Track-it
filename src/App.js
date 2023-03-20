@@ -36,7 +36,7 @@ export default function App() {
 
 const Container = styled.div`
   width: 100%;
-  height: 100vh;
+  /* height: 100vh; */
   padding: ${({userLogado})=>userLogado===null ? `5%` : `0%`};
 
   display: flex;

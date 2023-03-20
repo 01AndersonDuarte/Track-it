@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { CurrentUserContext } from "../../components/CurrentUserContext";
 import { BsTrash } from "react-icons/bs"
 import DeleteHabit from "./DeleteHabit";
-import { Loading } from "../../components/Loading";
+import { Loading, LoadingCircle } from "../../components/Loading";
 
 export default function HabitsPage() {
     const { userLogado, setUserLogado } = useContext(CurrentUserContext);
@@ -80,16 +80,14 @@ export default function HabitsPage() {
 
     if (userHabits === null) {
         return (
-            <ContainerHabits>
-                <div>
-                    <p>Carregando...</p>
-                </div>
+            <ContainerHabits userHabits={userHabits}>
+                <DivLoading><LoadingCircle/></DivLoading>
             </ContainerHabits>
         );
     }
 
     return (
-        <ContainerHabits>
+        <ContainerHabits userHabits={userHabits}>
             {deleteHabit && <DeleteHabit removeHabit={removeHabit} />}
             <SignUpHabit>
                 <p>Meus hábitos</p>
@@ -189,10 +187,11 @@ const SignUpHabit = styled.div`
 
 const ContainerHabits = styled.div`
     width: 100%;
-    /* height: 100%; */
+    height: 100%;
     padding: 20% 5% 20% 5%;
     font-family: 'Lexend Deca', sans-serif;
-    background-color: rgba(229, 229, 229, 0.4);
+    background-color: ${({userHabits}) => userHabits===null ? "#FFFFFF" : "rgba(229, 229, 229, 0.4)"};
+    position: relative;
     h2{
         color: #666666;
         text-align: center;
@@ -289,4 +288,9 @@ const TrashIcon = styled(BsTrash)`
      top: 8%;
      cursor: pointer;
 
+`;
+const DivLoading = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
 `;

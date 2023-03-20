@@ -5,6 +5,7 @@ import dayjs from "dayjs";
 
 import { CurrentUserContext } from "../../components/CurrentUserContext";
 import HabitsList from "./HabitsList";
+import { LoadingCircle } from "../../components/Loading";
 
 const daysWeek = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
 
@@ -21,12 +22,9 @@ export default function TodayPage() {
         setUserLogado({...userLogado, habitsMade: complete});
     }
     function refreshHabitsToday(){
-        console.log(day);
-
         const promise = axios.get(url, config);
         promise.then((sucess) => {
             setTodayHabits(sucess.data);
-            console.log(sucess.data);
         });
         promise.catch((error) => {
             console.log(error);
@@ -36,20 +34,21 @@ export default function TodayPage() {
 
     if (todayHabits === null) {
         return (
-            <ContainerToday>Carregando...</ContainerToday>
+            <ContainerToday todayHabits={todayHabits}>
+                <DivLoading><LoadingCircle/></DivLoading>
+            </ContainerToday>
         );
     }
 
     return (
-        <ContainerToday color={todayHabits.some(h=>h.done===true) ? "#8FC549" : "#BABABA"}>
-            <div>
+        <ContainerToday todayHabits={todayHabits} color={todayHabits.some(h=>h.done===true) ? "#8FC549" : "#BABABA"}>
+            <>
                 <h1 data-test="today">{day}, {dayjs().format('DD/MM')}</h1>
 
                 {todayHabits === null ? (
                     <h2 data-test="today-counter">Nenhum hábito concluído ainda</h2>
                 ) : todayHabits.some((h) => h.done === true) ? (
                     <CurrentUserContext.Provider value={{config, habitsComplete, refreshHabitsToday}}>
-                        {console.log(todayHabits)}
                         <h2 data-test="today-counter">{(todayHabits.filter(h=>h.done===true).length*100/todayHabits.length).toFixed(2)}% dos hábitos concluídos</h2>
                         {todayHabits.map((habit) => <HabitsList key={habit.id} habit={habit} />)}
                     </CurrentUserContext.Provider>
@@ -60,33 +59,38 @@ export default function TodayPage() {
                     </CurrentUserContext.Provider>
                 )}
 
-            </div>
+            </>
         </ContainerToday>
     );
 }
 
 const ContainerToday = styled.div`
     width: 100%;
+    height: 100%;
     padding: 20% 5% 20% 5%;
-    background-color: rgba(229, 229, 229, 0.4);
+    background-color: ${({todayHabits}) => todayHabits===null ? "#FFFFFF" : "rgba(229, 229, 229, 0.4)"};
     font-family: 'Lexend Deca', sans-serif;
     font-style: normal;
     font-weight: 400;
-    div{
-        padding: 3%;
-        h1{
-            color: #126BA5;
-            font-size: 23px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: 29px;
-        }
-        h2{
-            color: ${({color})=>color};
-            text-align: start;
-            font-size: 18px;
-            line-height: 22px;
-            margin-bottom: 5%;
-        }
+
+    h1{
+        color: #126BA5;
+        font-size: 23px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 29px;
     }
+    h2{
+        color: ${({color})=>color};
+        text-align: start;
+        font-size: 18px;
+        line-height: 22px;
+        margin-bottom: 5%;
+    }
+`;
+
+const DivLoading = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
 `;

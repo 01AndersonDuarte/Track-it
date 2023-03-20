@@ -46,7 +46,7 @@ export default function HabitsList({ habit }) {
 
     return (
         <>
-            <TodayHabits data-test="today-habit-container" habitDone={stateCheck && "#8FC549"} recordHabit={(bool && habit.currentSequence > 0) && "#8FC549"}>
+            <TodayHabits data-test="today-habit-container" habitDone={habit.done && "#8FC549"} recordHabit={(bool && habit.currentSequence > 0) && "#8FC549"}>
                 <span>
                     <p data-test="today-habit-name">{habit.name}</p>
                     <h3 data-test="today-habit-sequence">
