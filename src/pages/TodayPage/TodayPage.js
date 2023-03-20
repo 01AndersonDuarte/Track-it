@@ -66,9 +66,8 @@ export default function TodayPage() {
 
 const ContainerToday = styled.div`
     width: 100%;
-    height: 100%;
+    z-index: 1;
     padding: 20% 5% 20% 5%;
-    background-color: ${({todayHabits}) => todayHabits===null ? "#FFFFFF" : "rgba(229, 229, 229, 0.4)"};
     font-family: 'Lexend Deca', sans-serif;
     font-style: normal;
     font-weight: 400;

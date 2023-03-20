@@ -136,7 +136,6 @@ export default function HabitsPage() {
 }
 
 function AllButton({ w, habit, setHabit, request }) {
-
     function addButton(day) {
         if (habit.days.includes(w.day)) {
             const days = habit.days.filter((d) => d !== day);
@@ -187,11 +186,10 @@ const SignUpHabit = styled.div`
 
 const ContainerHabits = styled.div`
     width: 100%;
-    height: 100%;
+    z-index: 1;
     padding: 20% 5% 20% 5%;
     font-family: 'Lexend Deca', sans-serif;
-    background-color: ${({userHabits}) => userHabits===null ? "#FFFFFF" : "rgba(229, 229, 229, 0.4)"};
-    position: relative;
+    
     h2{
         color: #666666;
         text-align: center;

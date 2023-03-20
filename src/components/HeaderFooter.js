@@ -17,6 +17,7 @@ export default function HeaderFooter() {
             {userLogado === null ? '' :
                 <Container>
                     <header data-test="header">{TrackitText}<img src={userLogado.image} alt="" /></header>
+                    <Background/>
                     <footer data-test="menu">
                         <StyledLink data-test="habit-link" to="/habitos">
                             <p>Hábitos</p>
@@ -37,14 +38,16 @@ export default function HeaderFooter() {
 
 const Container = styled.div`
     width: 100%;
+    height: 100%;
     font-family: 'Lexend Deca', sans-serif;
+    background-color: red;
     header{
         width: 100%;
         padding: 2% 10% 2% 10%;
 
         position: fixed;
         top: 0;
-        z-index: 1;
+        z-index: 2;
 
         background-color: #126BA5;
         box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.2);
@@ -64,7 +67,7 @@ const Container = styled.div`
 
         position: fixed;
         bottom: 0;
-        z-index: 1;
+        z-index: 2;
 
         background-color: #FFFFFF;
         box-shadow: 0px 0px 3px 0.5px rgba(0, 0, 0, 0.2);
@@ -90,4 +93,13 @@ const StyledLink = styled(Link)`
         font-size: 18px;
         color: #52B6FF;
     }
+`;
+
+const Background = styled.div`
+    background-color: rgba(229, 229, 229, 0.4);
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
 `;

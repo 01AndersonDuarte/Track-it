@@ -7,7 +7,7 @@ import { CurrentUserContext } from "../../components/CurrentUserContext";
 import { LoadingCircle } from "../../components/Loading";
 
 export default function HabitsList({ habit }) {
-    const [stateCheck, setStateCheck] = useState(habit.done);
+    // const [stateCheck, setStateCheck] = useState(habit.done);
     const [loadingCheck, setLoadingCheck] = useState(false);
     const { config, habitsComplete, refreshHabitsToday } = useContext(CurrentUserContext);
     const bool = habit.currentSequence === habit.highestSequence;
@@ -16,12 +16,12 @@ export default function HabitsList({ habit }) {
         habitsComplete();
         setLoadingCheck(false);
     }
-    useEffect(refresh, [habit]);
+    useEffect(refresh, [habit.currentSequence]);
 
     function activityCheck() {
-        setStateCheck(!stateCheck);
-        setLoadingCheck(!loadingCheck);
-        if (stateCheck) {
+        // setStateCheck(!stateCheck);
+        setLoadingCheck(true);
+        if (habit.done) {
             const url = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habit.id}/uncheck`;
             const promise = axios.post(url, '', config);
             promise.then((sucess) => {
@@ -46,7 +46,7 @@ export default function HabitsList({ habit }) {
 
     return (
         <>
-            <TodayHabits data-test="today-habit-container" habitDone={habit.done && "#8FC549"} recordHabit={(bool && habit.currentSequence > 0) && "#8FC549"}>
+            <TodayHabits data-test="today-habit-container" habitDone={habit.done && "#8FC549"} recordHabit={(habit.done && bool && habit.currentSequence > 0) && "#8FC549"}>
                 <span>
                     <p data-test="today-habit-name">{habit.name}</p>
                     <h3 data-test="today-habit-sequence">
@@ -63,7 +63,7 @@ export default function HabitsList({ habit }) {
                             :
                             <CheckBox
                                 data-test="today-habit-check-btn"
-                                style={{ fill: stateCheck ? "#8FC549" : "#EBEBEB" }}
+                                style={{ fill: habit.done ? "#8FC549" : "#EBEBEB" }}
                                 onClick={activityCheck}
                             />
                     }
