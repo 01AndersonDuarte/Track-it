@@ -20,7 +20,7 @@ A aplicação possui as seguintes funcionalidades:
 Implementações futuras para melhorias:
 
 <ul>
-    <li>Realizar logout</li>
+    <li>Botão de logout</li>
     <li>Carregar histórico</li>
     <li>Alterar imagem</li>
 </ul>
